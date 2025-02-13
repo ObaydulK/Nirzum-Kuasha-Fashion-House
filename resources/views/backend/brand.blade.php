@@ -49,8 +49,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            @foreach ($brands as $brand)
                             <tbody>
+                                @foreach ($brands as $brand)
                                 <tr>
                                     <td>{{$brand->id}}</td>
                                     <td class="pname">
@@ -62,24 +62,26 @@
                                         </div>
                                     </td>
                                     <td>{{$brand->slug}}</td>
-                                    <td><a href="#" target="_blank">1</a></td>
+                                    <td><a href="{{route('backend.addbrands', ['brand_slug' => $brand->slug])}}" target="_blank">{{$brand->count()}}</a></td>
                                     <td>
                                         <div class="list-icon-function">
-                                            <a href="#">
+                                            <a href="{{route('brand.edit', $brand->id)}}">
                                                 <div class="item edit">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
-                                            <form action="#" method="POST">
-                                                <div class="item text-danger delete">
+                                            <form action="{{route('brand.delete', $brand->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="item text-danger delete">
                                                     <i class="icon-trash-2"></i>
-                                                </div>
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
-                            @endforeach
                         </table>
                     </div>
                     <div class="divider"></div>

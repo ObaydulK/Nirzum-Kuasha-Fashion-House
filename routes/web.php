@@ -28,11 +28,15 @@ Route::middleware(['auth', AuthAdmin::class])->group(function(){
     
     Route::get('/brands', [Admincontroller::class, 'brands'])->name('backend.brands');
     Route::get('/addbrands', [Admincontroller::class, 'addbrands'])->name('backend.addbrands');
+    Route::post('/brand/store', [Admincontroller::class, 'brandstore'])->name('brand.store');
+    Route::get('/brand/{id}/edit', [Admincontroller::class, 'brandedit'])->name('brand.edit');
+    Route::put('/brand/{id}/update', [Admincontroller::class, 'brandupdate'])->name('brand.update');
+    Route::delete('/brand/store/{id}', [Admincontroller::class, 'branddestry'])->name('brand.delete');
 
-
+     
     
 
-
+    
 
 
 

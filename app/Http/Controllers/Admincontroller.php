@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\Laravel\Facades\Image;
 use Str;
+use Validator;
 
 class Admincontroller extends Controller
 {
@@ -21,45 +22,63 @@ class Admincontroller extends Controller
 
 
     public function brands(){
-        $brands = Brand::orderBy('id, DESC')->paginate(10);
+        $brands = Brand::orderBy('id', 'DESC')->paginate(10);
         return view('backend.brand', compact('brands'));
     }
 
     public function addbrands(){
         return view('backend.addbrand');
     }
-
-    public function BrandStore(Request $request){
-        $request -> validate([
-            'name' => 'required',
-            'sulg' => 'required|unique:brands, slug',
-            'image' => 'mimes: png, jpg, jpeg|max:4096',
+// brand store part 
+    public function brandstore(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'slug' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $brand = new Brand;
+        $Brands = new Brand;
+        $Brands->name = $request->name;
+        $Brands->slug = $request->slug;
+        $Brands->image = $request->image;
+        $Brands->save();
+       
+       return redirect()->route('backend.brands')->with('status','Record has been added successfully !');
+   }
 
-        $brand->name= $request->name;
-        $brand->slug = Str::slug($request->slug);
+// Brand edit part
+   public function brandedit($id){
+    $Brand = Brand::find($id);
+     return view('backend.editbrand', compact('Brand'));
 
-        $image = $request->file('image');
-        $file_extention = $request->file('image')->extension();
-        $file_name = Carbon::now()->timestamp.'.'.$file_extention;
-        $this->GenerateBrandThumbailsImage($image, $file_name);
+   }
 
-        $brand->image = $file_name;
+//    Brand update part 
+   public function brandupdate(Request $request, $id){
+     
 
-        $brand->save();
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'slug' => 'required',
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]); 
 
-        return redirect()->route('backend.brands')->with('success', 'Brand update success full');
-    }
+    $brands = Brand::findOrFail($id);
+    $brands->update($request->all());
+   
+   return redirect()->route('backend.brands')->with('status','Update has been added successfully !');
+   }
 
-    public function GenerateBrandThumbailsImage($image, $imageName){
-        $destinationPath = public_path('upload/brand');
-        $img = Image::read($image->path);
-        $img->cover(124, 124, "top" );
-        $img->resize(124,124,function($constraint){
-            $constraint->asperRotio();
-        })->save($destinationPath.'/'.$imageName);
-    }
 
+
+
+
+
+
+//    Brand Disrtoy part 
+   public function branddestry(Request $request, $id){
+        $brand = Brand::find($id);
+        $brand->delete();
+        return redirect()->route('backend.brands')->with('status','Record has been added successfully !');
+   }
 
 }

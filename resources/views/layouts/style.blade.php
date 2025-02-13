@@ -1,7 +1,7 @@
-<title>Surfside Media</title>
+<title>NirZum_Kuasha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="author" content="surfside media" />
+<meta name="author" content="NirZum_Kuasha" />
 <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.gstatic.com/">
 <link
