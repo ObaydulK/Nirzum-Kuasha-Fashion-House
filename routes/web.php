@@ -25,7 +25,7 @@ Route::middleware(['auth', AuthAdmin::class])->group(function(){
     Route::get('/admin', [Admincontroller::class, 'index'])->name('backend.index');
     Route::get('/Deshbord', [Admincontroller::class, 'deshboard'])->name('backend.deshboard');
     
-    
+    //    -----------------------------------------------------This part is a Brand part----------------------------------------------------------------------------------------
     Route::get('/brands', [Admincontroller::class, 'brands'])->name('backend.brands');
     Route::get('/addbrands', [Admincontroller::class, 'addbrands'])->name('backend.addbrands');
     Route::post('/brand/store', [Admincontroller::class, 'brandstore'])->name('brand.store');
@@ -35,8 +35,14 @@ Route::middleware(['auth', AuthAdmin::class])->group(function(){
 
      
     
+//    -----------------------------------------------------This part is a category part----------------------------------------------------------------------------------------
 
-    
+ Route::get('/category', [Admincontroller::class, 'category'])->name('category.index');
+ Route::get('/category/add', [Admincontroller::class, 'AddCategory'])->name('category.add');
+ Route::post('/category/store', [Admincontroller::class, 'storeCategories'])->name('category.store');
+ Route::get('/category/{id}/edit', [Admincontroller::class, 'editCategories'])->name('category.edit');
+ Route::put('/category/{id}/update', [Admincontroller::class, 'updateCategories'])->name('category.update');
+ Route::delete('/category/{id}/delete', [Admincontroller::class, 'deleteCategories'])->name('category.delete');
 
 
 
